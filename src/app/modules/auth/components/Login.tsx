@@ -9,6 +9,7 @@ import { useSnackbar } from 'notistack';
 import { useFormik } from 'formik'
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as auth from '../redux/AuthRedux'
+import {setOnboardingActive} from '../../onboarding/onboardingSlice'
 import { login } from '../redux/AuthCRUD'
 import { toAbsoluteUrl } from '../../../../_metronic/helpers'
 import { AUTH_LOGIN, SYSTEM_LOG } from '../.../../../../../gql/Mutation';
@@ -78,6 +79,9 @@ const Login: FC = () => {
             localStorage.setItem('partner', JSON.stringify(data?.login?.user))
             authToken(data?.login?.access_token);
             addUser(data?.login?.user)
+            if (data.login.user.approved_status !== 'approved') {
+              dispatch(setOnboardingActive(true))
+            }
             showToast('Successfully Login', 'success')
             if (
               data.login.access_token &&
