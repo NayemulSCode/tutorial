@@ -5,20 +5,32 @@
  * components (e.g: `src/app/modules/Auth/pages/AuthPage`, `src/app/BasePage`).
  */
 
-import React, {FC, useContext} from 'react'
+import React, {FC, useContext, useEffect} from 'react'
 import {Redirect, Switch, Route, Link} from 'react-router-dom'
-import {shallowEqual, useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import {PrivateRoutes} from './PrivateRoutes'
 import {Logout, AuthPage} from '../modules/auth'
 import {ErrorsPage} from '../modules/errors/ErrorsPage'
 import {RootState} from '../../setup'
 import { AppContext } from '../../context/Context'
+import {setOnboardingActive} from '../modules/onboarding/onboardingSlice'
 import CookieConsent from "react-cookie-consent";
 
 const Routes: FC = () => {
   const {token} = useContext(AppContext)
   const isAuthorized = localStorage.getItem('token') || token;
+  const user = useSelector((state: RootState) => state.auth.user)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (isAuthorized && user && user.approved_status !== 'approved') {
+      dispatch(setOnboardingActive(true))
+    } else if (user && user.approved_status === 'approved') {
+      dispatch(setOnboardingActive(false))
+    }
+  }, [isAuthorized, user, dispatch])
+
   const handleCookieAccept = () => {
     console.log('accept cookie')
   }

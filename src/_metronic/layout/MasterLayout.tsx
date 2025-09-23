@@ -16,33 +16,36 @@ import {
   UpgradePlan,
 } from '../partials'
 import { useLocation } from 'react-router-dom'
+import OnboardingWrapper from '../../app/modules/onboarding/OnboardingWrapper'
 
 const MasterLayout: React.FC = ({ children }) => {
   const location = useLocation()
   // console.log("location", location.pathname)
   return (
     <PageDataProvider>
-      <div className='page d-flex flex-row flex-column-fluid'>
-        {
-          location?.pathname === "/account/setup" ? "" : <AsideDefault />
-        }
-        {/* <AsideDefault /> */}
-        {/* <div className='wrapper d-flex flex-column flex-row-fluid' id='kt_wrapper'> */}
-        <div className={`${location.pathname === "/account/setup" ? 'd-flex flex-column flex-row-fluid' : 'wrapper d-flex flex-column flex-row-fluid'}`} id='kt_wrapper'>
+      <OnboardingWrapper>
+        <div className='page d-flex flex-row flex-column-fluid'>
           {
-            location?.pathname === "/account/setup" ? "" : <HeaderWrapper />
+            location?.pathname === "/account/setup" ? "" : <AsideDefault />
           }
-          {/* <HeaderWrapper /> */}
+          {/* <AsideDefault /> */}
+          {/* <div className='wrapper d-flex flex-column flex-row-fluid' id='kt_wrapper'> */}
+          <div className={`${location.pathname === "/account/setup" ? 'd-flex flex-column flex-row-fluid' : 'wrapper d-flex flex-column flex-row-fluid'}`} id='kt_wrapper'>
+            {
+              location?.pathname === "/account/setup" ? "" : <HeaderWrapper />
+            }
+            {/* <HeaderWrapper /> */}
 
-          <div id='kt_content' className='content d-flex flex-column flex-column-fluid'>
-            <Toolbar />
-            <div className='post d-flex flex-column-fluid' id='kt_post'>
-              <Content>{children}</Content>
+            <div id='kt_content' className='content d-flex flex-column flex-column-fluid'>
+              <Toolbar />
+              <div className='post d-flex flex-column-fluid' id='kt_post'>
+                <Content>{children}</Content>
+              </div>
             </div>
+            <Footer />
           </div>
-          <Footer />
         </div>
-      </div>
+      </OnboardingWrapper>
 
       {/* begin:: Drawers */}
       <ActivityDrawer />

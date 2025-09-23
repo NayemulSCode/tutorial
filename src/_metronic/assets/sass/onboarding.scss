@@ -1,0 +1,10 @@
+// Onboarding styles
+.grey-out {
+  filter: grayscale(80%);
+  pointer-events: none;
+}
+
+.grey-out-override {
+  filter: none !important;
+  pointer-events: auto !important;
+}
