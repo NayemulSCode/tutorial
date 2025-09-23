@@ -1,9 +1,20 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
+// Define unique keys for each UI element that can be unlocked.
+export const OnboardingUnlockKeys = {
+  PROFILE_MENU: 'PROFILE_MENU',
+  MY_PROFILE_LINK: 'MY_PROFILE_LINK',
+  PROFILE_PAGE_EDIT_BUTTON: 'PROFILE_PAGE_EDIT_BUTTON',
+  SETTINGS_MENU: 'SETTINGS_MENU',
+  WORKING_HOURS_EDIT_BUTTON: 'WORKING_HOURS_EDIT_BUTTON',
+  SERVICES_MENU: 'SERVICES_MENU',
+}
+
 interface OnboardingStep {
   title: string
   description: string
   videoUrl: string
+  unlocks: string | null // Key from OnboardingUnlockKeys
 }
 
 interface OnboardingState {
@@ -11,32 +22,55 @@ interface OnboardingState {
   totalSteps: number
   isOnboardingActive: boolean
   steps: OnboardingStep[]
+  unlockedItems: string[]
 }
 
-// Mock data for the onboarding steps
 const mockSteps: OnboardingStep[] = [
   {
     title: 'Welcome to Chuzeday!',
     description: 'A quick overview of the platform.',
-    videoUrl: 'https://www.youtube.com/embed/h_j6PLSHrW4', // Placeholder
+    videoUrl: 'https://www.youtube.com/embed/ZxVG_k3q6jA',
+    unlocks: null, // First step unlocks nothing
+  },
+  {
+    title: 'Profile Menu Access',
+    description: 'This step enables the profile dropdown menu in the header.',
+    videoUrl: 'https://www.youtube.com/embed/ZxVG_k3q6jA',
+    unlocks: OnboardingUnlockKeys.PROFILE_MENU,
   },
   {
     title: 'Set Up Your Profile',
-    description: 'Complete your business profile to get started.',
-    videoUrl: 'https://www.youtube.com/embed/h_j6PLSHrW4', // Placeholder
+    description: 'This step enables the "My Profile" link and the "Edit Profile" button.',
+    videoUrl: 'https://www.youtube.com/embed/ZxVG_k3q6jA',
+    unlocks: OnboardingUnlockKeys.MY_PROFILE_LINK,
+  },
+  {
+    title: 'Setting Working Hours',
+    description:
+      'This step enables the "Settings" menu item to allow access to working hours.',
+    videoUrl: 'https://www.youtube.com/embed/ZxVG_k3q6jA',
+    unlocks: OnboardingUnlockKeys.SETTINGS_MENU,
+  },
+  {
+    title: 'Working Hours Configuration',
+    description: 'This step enables the "Edit" button on the working hours page.',
+    videoUrl: 'https://www.youtube.com/embed/ZxVG_k3q6jA',
+    unlocks: OnboardingUnlockKeys.WORKING_HOURS_EDIT_BUTTON,
   },
   {
     title: 'Create Your First Service',
-    description: 'Learn how to add services to your marketplace listing.',
-    videoUrl: 'https://www.youtube.com/embed/h_j6PLSHrW4', // Placeholder
+    description: 'This step enables the "Services" menu item.',
+    videoUrl: 'https://www.youtube.com/embed/w5nDRW9E1lY',
+    unlocks: OnboardingUnlockKeys.SERVICES_MENU,
   },
 ]
 
 const initialState: OnboardingState = {
   currentStep: 1,
   totalSteps: mockSteps.length,
-  isOnboardingActive: false, // Default to false, will be activated based on user status
+  isOnboardingActive: false,
   steps: mockSteps,
+  unlockedItems: [],
 }
 
 const onboardingSlice = createSlice({
@@ -51,15 +85,22 @@ const onboardingSlice = createSlice({
     },
     nextStep: (state) => {
       if (state.currentStep < state.totalSteps) {
+        const currentStepData = state.steps[state.currentStep - 1]
+        if (currentStepData.unlocks && !state.unlockedItems.includes(currentStepData.unlocks)) {
+          state.unlockedItems.push(currentStepData.unlocks)
+        }
         state.currentStep += 1
       }
     },
     prevStep: (state) => {
       if (state.currentStep > 1) {
         state.currentStep -= 1
+        // Note: We don't re-lock items when going back. This is a design choice.
       }
     },
     completeOnboarding: (state) => {
+      // Unlock all items on completion
+      state.unlockedItems = Object.values(OnboardingUnlockKeys)
       state.isOnboardingActive = false
       state.currentStep = 1
     },

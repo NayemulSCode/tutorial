@@ -12,11 +12,13 @@ import {Header} from './Header'
 import {DefaultTitle} from './page-title/DefaultTitle'
 import {Topbar} from './Topbar'
 
+import {OnboardingUnlockKeys} from '../../../../app/modules/onboarding/onboardingSlice'
+
 type Props = {
-  isUnlocked?: boolean
+  unlockedItems: string[]
 }
 
-export function HeaderWrapper({isUnlocked}: Props) {
+export function HeaderWrapper({unlockedItems}: Props) {
   const {pathname} = useLocation()
   const {config, classes, attributes} = useLayout()
   const {header, aside} = config
@@ -95,8 +97,8 @@ export function HeaderWrapper({isUnlocked}: Props) {
             </div>
           )}
 
-          <div className={clsx('d-flex align-items-stretch flex-shrink-0', {'grey-out-override': isUnlocked})}>
-            <Topbar />
+          <div className={clsx('d-flex align-items-stretch flex-shrink-0', {'grey-out-override': unlockedItems.includes(OnboardingUnlockKeys.PROFILE_MENU)})}>
+            <Topbar unlockedItems={unlockedItems} />
           </div>
         </div>
         {/* end::Wrapper */}

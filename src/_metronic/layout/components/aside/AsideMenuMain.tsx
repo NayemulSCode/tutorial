@@ -4,10 +4,13 @@ import { useIntl } from 'react-intl'
 import { KTSVG } from '../../../helpers'
 import { AsideMenuItemWithSub } from './AsideMenuItemWithSub'
 import { AsideMenuItem } from './AsideMenuItem'
+import {OnboardingUnlockKeys} from '../../../../app/modules/onboarding/onboardingSlice'
 
-// import { IMG1 } from ''
+type Props = {
+  unlockedItems: string[]
+}
 
-export function AsideMenuMain() {
+export function AsideMenuMain({unlockedItems}: Props) {
   const intl = useIntl()
 
   return (
@@ -15,6 +18,7 @@ export function AsideMenuMain() {
 
       <AsideMenuItem
         to='/home'
+        unlockedItems={unlockedItems}
         icon='/media/icons/duotune/art/art002.svg'
         title={intl.formatMessage({ id: 'Home' })}
         fontIcon='bi-app-indicator'
@@ -66,9 +70,12 @@ export function AsideMenuMain() {
         icon='/media/icons/duotune/art/art007.svg'
         title={intl.formatMessage({ id: 'Services' })}
         fontIcon='bi-app-indicator'
+        unlockKey={OnboardingUnlockKeys.SERVICES_MENU}
+        unlockedItems={unlockedItems}
       />
       <AsideMenuItem
         to='/inventory/products'
+        unlockedItems={unlockedItems}
         icon='/media/icons/duotune/art/art008.svg'
         title={intl.formatMessage({ id: 'Inventory' })}
         fontIcon='bi-app-indicator'
@@ -86,9 +93,12 @@ export function AsideMenuMain() {
         icon='/media/icons/duotune/art/art0010.svg'
         title={intl.formatMessage({ id: 'Settings' })}
         fontIcon='bi-app-indicator'
+        unlockKey={OnboardingUnlockKeys.SETTINGS_MENU}
+        unlockedItems={unlockedItems}
       />
       <AsideMenuItem
         to='/share'
+        unlockedItems={unlockedItems}
         icon='/media/icons/duotune/art/share.svg'
         title={intl.formatMessage({ id: 'Share' })}
         fontIcon='bi-app-indicator'

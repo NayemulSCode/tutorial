@@ -9,8 +9,14 @@ import Profile from '../../../../_metronic/assets/images/avatars/blank.png'
 import { useApolloClient } from "@apollo/client";
 import { AppContext } from '../../../../../src/context/Context';
 import { profile } from 'console'
+import {OnboardingUnlockKeys} from '../../../../app/modules/onboarding/onboardingSlice'
+import clsx from 'clsx'
 
-const HeaderUserMenu: FC = () => {
+type Props = {
+  unlockedItems: string[]
+}
+
+const HeaderUserMenu: FC<Props> = ({unlockedItems}) => {
   // const photo = localStorage.getItem('photo') || null
   const client = useApolloClient();
   const { authToken, token, user } = useContext(AppContext);
@@ -53,7 +59,7 @@ const HeaderUserMenu: FC = () => {
 
       <div className='separator my-2'></div>
 
-      <div className='menu-item px-5'>
+      <div className={clsx('menu-item px-5', {'grey-out-override': unlockedItems.includes(OnboardingUnlockKeys.MY_PROFILE_LINK)})}>
         <Link to="/account/overview" className='menu-link px-5'>
           My Profile
         </Link>

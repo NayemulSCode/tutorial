@@ -9,6 +9,10 @@ import { useMutation } from '@apollo/client';
 import { useSnackbar } from 'notistack';
 import { BUSINESS_SETUP_Q } from '../../../../../gql/Query';
 import { useHistory } from 'react-router-dom';
+import {useSelector} from 'react-redux'
+import {RootState} from '../../../../../setup'
+import {OnboardingUnlockKeys} from '../../../../modules/onboarding/onboardingSlice'
+
 type Props = {
     getDailyTime: (type: string) => void
     slotDuration: any
@@ -26,6 +30,7 @@ const timeSlotArray = ["00:00","06:00","06:15", "06:30", "06:45","07:00","07:15"
 const EditWorkingHours: FC<Props> = ({ getDailyTime, uniq, fitlerOnDay, mapOnDays, workingHours, slotDuration }) => {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
+    const {unlockedItems} = useSelector((state: RootState) => state.onboarding)
     const [loading, setLoading] = useState<boolean>(false);
     const weekDay = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
     // console.log("filter on day", fitlerOnDay);
@@ -2428,9 +2433,10 @@ const EditWorkingHours: FC<Props> = ({ getDailyTime, uniq, fitlerOnDay, mapOnDay
           className='btn btn-primary mt-4 text-gray-400 fw-bold fs-6'
           style={{marginLeft: '10px'}}
           onClick={handleSubmit}
-          disabled={loading}
+          disabled={loading || !unlockedItems.includes(OnboardingUnlockKeys.WORKING_HOURS_EDIT_BUTTON)}
         >
-          {!loading && <span className='indicator-label'>Save</span>}
+          {!unlockedItems.includes(OnboardingUnlockKeys.WORKING_HOURS_EDIT_BUTTON) && "Complete onboarding to enable"}
+          {unlockedItems.includes(OnboardingUnlockKeys.WORKING_HOURS_EDIT_BUTTON) && !loading && <span className='indicator-label'>Save</span>}
           {loading && (
             <span className='indicator-progress' style={{display: 'block'}}>
               Saving...

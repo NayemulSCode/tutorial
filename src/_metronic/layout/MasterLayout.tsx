@@ -23,14 +23,14 @@ import {RootState} from '../../setup'
 
 const MasterLayout: React.FC = ({ children }) => {
   const location = useLocation()
-  const {isOnboardingActive, currentStep} = useSelector((state: RootState) => state.onboarding)
+  const {isOnboardingActive, unlockedItems} = useSelector((state: RootState) => state.onboarding)
   // console.log("location", location.pathname)
   return (
     <PageDataProvider>
       <OnboardingWrapper>
         <div className='page d-flex flex-row flex-column-fluid'>
           {
-            location?.pathname === "/account/setup" ? "" : <AsideDefault className={clsx({'grey-out': isOnboardingActive})} />
+            location?.pathname === "/account/setup" ? "" : <AsideDefault className={clsx({'grey-out': isOnboardingActive})} unlockedItems={unlockedItems} />
           }
           {/* <AsideDefault /> */}
           {/* <div className='wrapper d-flex flex-column flex-row-fluid' id='kt_wrapper'> */}
@@ -40,7 +40,7 @@ const MasterLayout: React.FC = ({ children }) => {
               {'d-flex flex-column flex-row-fluid': location.pathname === "/account/setup"}
             )} id='kt_wrapper'>
             {
-              location?.pathname === "/account/setup" ? "" : <HeaderWrapper isUnlocked={currentStep >= 2} />
+              location?.pathname === "/account/setup" ? "" : <HeaderWrapper unlockedItems={unlockedItems} />
             }
             {/* <HeaderWrapper /> */}
 

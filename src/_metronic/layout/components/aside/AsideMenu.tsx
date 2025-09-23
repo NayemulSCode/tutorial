@@ -11,9 +11,10 @@ import {
 
 type Props = {
   asideMenuCSSClasses: string[]
+  unlockedItems: string[]
 }
 
-const AsideMenu: React.FC<Props> = ({asideMenuCSSClasses}) => {
+const AsideMenu: React.FC<Props> = ({asideMenuCSSClasses, unlockedItems}) => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const {pathname} = useLocation()
 
@@ -50,7 +51,7 @@ const AsideMenu: React.FC<Props> = ({asideMenuCSSClasses}) => {
           asideMenuCSSClasses.join(' ')
         )}
       >
-        <AsideMenuMain />
+        <AsideMenuMain unlockedItems={unlockedItems} />
       </div>
     </div>
   )

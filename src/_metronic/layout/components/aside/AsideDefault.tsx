@@ -9,9 +9,10 @@ import {AsideMenu} from './AsideMenu'
 
 type Props = {
   className?: string
+  unlockedItems: string[]
 }
 
-const AsideDefault: FC<Props> = ({className}) => {
+const AsideDefault: FC<Props> = ({className, unlockedItems}) => {
   const {config, classes} = useLayout()
   const {aside} = config
 
@@ -73,7 +74,7 @@ const AsideDefault: FC<Props> = ({className}) => {
 
       {/* begin::Aside menu */}
       <div className='aside-menu flex-column-fluid'>
-        <AsideMenu asideMenuCSSClasses={classes.asideMenu} />
+        <AsideMenu asideMenuCSSClasses={classes.asideMenu} unlockedItems={unlockedItems} />
       </div>
       {/* end::Aside menu */}
 

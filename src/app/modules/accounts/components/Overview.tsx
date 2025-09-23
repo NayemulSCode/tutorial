@@ -1,8 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import { Link } from 'react-router-dom'
+import {useSelector} from 'react-redux'
+import clsx from 'clsx'
+import {RootState} from '../../../../setup'
+import {OnboardingUnlockKeys} from '../../onboarding/onboardingSlice'
 
 const Overview: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
+  const {unlockedItems} = useSelector((state: RootState) => state.onboarding)
   // console.log(accInfo)
   return (
     <>
@@ -12,7 +17,12 @@ const Overview: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
             <h3 className='fw-bolder m-0'>Profile Details</h3>
           </div>
 
-          <Link to='/account/settings' className='btn btn-primary align-self-center'>
+          <Link
+            to='/account/settings'
+            className={clsx('btn btn-primary align-self-center', {
+              'grey-out-override': unlockedItems.includes(OnboardingUnlockKeys.PROFILE_PAGE_EDIT_BUTTON),
+            })}
+          >
             Edit Profile
           </Link>
         </div>

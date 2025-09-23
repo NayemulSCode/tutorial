@@ -61,7 +61,12 @@ interface IEnter{
   title: string
   route_path: string
 }
-const Topbar: FC = () => {
+
+type Props = {
+  unlockedItems: string[]
+}
+
+const Topbar: FC<Props> = ({unlockedItems}) => {
   const { authToken, token, user } = useContext(AppContext);
   const { config } = useLayout()
   const imageBaseURL = `${imageUrl}/uploads/partner/${user?.photo}`;
@@ -466,7 +471,7 @@ const Topbar: FC = () => {
           }
 
         </div>
-        <HeaderUserMenu />
+        <HeaderUserMenu unlockedItems={unlockedItems} />
         {/* end::Toggle */}
       </div>
       {/* end::User */}
