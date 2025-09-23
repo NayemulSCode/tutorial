@@ -12,7 +12,11 @@ import {Header} from './Header'
 import {DefaultTitle} from './page-title/DefaultTitle'
 import {Topbar} from './Topbar'
 
-export function HeaderWrapper() {
+type Props = {
+  isUnlocked?: boolean
+}
+
+export function HeaderWrapper({isUnlocked}: Props) {
   const {pathname} = useLocation()
   const {config, classes, attributes} = useLayout()
   const {header, aside} = config
@@ -91,7 +95,7 @@ export function HeaderWrapper() {
             </div>
           )}
 
-          <div className='d-flex align-items-stretch flex-shrink-0'>
+          <div className={clsx('d-flex align-items-stretch flex-shrink-0', {'grey-out-override': isUnlocked})}>
             <Topbar />
           </div>
         </div>

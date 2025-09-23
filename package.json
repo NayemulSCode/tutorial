@@ -86,7 +86,7 @@
     "react-csv": "^2.2.1",
     "react-datepicker": "^4.5.0",
     "react-dom": "^17.0.2",
-    "react-draggable": "^4.5.0",
+    "react-draggable": "4.4.3",
     "react-geocode": "^0.2.3",
     "react-google-autocomplete": "^2.6.1",
     "react-google-charts": "^4.0.0",

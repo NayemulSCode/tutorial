@@ -18,17 +18,17 @@ const mockSteps: OnboardingStep[] = [
   {
     title: 'Welcome to Chuzeday!',
     description: 'A quick overview of the platform.',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Placeholder
+    videoUrl: 'https://www.youtube.com/embed/h_j6PLSHrW4', // Placeholder
   },
   {
     title: 'Set Up Your Profile',
     description: 'Complete your business profile to get started.',
-    videoUrl: 'https://www.youtube.com/embed/o-YBDTqX_ZU', // Placeholder
+    videoUrl: 'https://www.youtube.com/embed/h_j6PLSHrW4', // Placeholder
   },
   {
     title: 'Create Your First Service',
     description: 'Learn how to add services to your marketplace listing.',
-    videoUrl: 'https://www.youtube.com/embed/d-nxW9qBtxQ', // Placeholder
+    videoUrl: 'https://www.youtube.com/embed/h_j6PLSHrW4', // Placeholder
   },
 ]
 
@@ -59,8 +59,12 @@ const onboardingSlice = createSlice({
         state.currentStep -= 1
       }
     },
+    completeOnboarding: (state) => {
+      state.isOnboardingActive = false
+      state.currentStep = 1
+    },
   },
 })
 
-export const {setCurrentStep, setOnboardingActive, nextStep, prevStep} = onboardingSlice.actions
+export const {setCurrentStep, setOnboardingActive, nextStep, prevStep, completeOnboarding} = onboardingSlice.actions
 export default onboardingSlice.reducer

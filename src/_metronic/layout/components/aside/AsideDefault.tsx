@@ -7,14 +7,18 @@ import {useLayout} from '../../core'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
 import {AsideMenu} from './AsideMenu'
 
-const AsideDefault: FC = () => {
+type Props = {
+  className?: string
+}
+
+const AsideDefault: FC<Props> = ({className}) => {
   const {config, classes} = useLayout()
   const {aside} = config
 
   return (
     <div
       id='kt_aside'
-      className={clsx('aside', classes.aside.join(' '))}
+      className={clsx('aside', classes.aside.join(' '), className)}
       data-kt-drawer='true'
       data-kt-drawer-name='aside'
       data-kt-drawer-activate='{default: true, lg: false}'

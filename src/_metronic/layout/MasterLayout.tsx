@@ -16,23 +16,31 @@ import {
   UpgradePlan,
 } from '../partials'
 import { useLocation } from 'react-router-dom'
+import {useSelector} from 'react-redux'
+import clsx from 'clsx'
 import OnboardingWrapper from '../../app/modules/onboarding/OnboardingWrapper'
+import {RootState} from '../../setup'
 
 const MasterLayout: React.FC = ({ children }) => {
   const location = useLocation()
+  const {isOnboardingActive, currentStep} = useSelector((state: RootState) => state.onboarding)
   // console.log("location", location.pathname)
   return (
     <PageDataProvider>
       <OnboardingWrapper>
         <div className='page d-flex flex-row flex-column-fluid'>
           {
-            location?.pathname === "/account/setup" ? "" : <AsideDefault />
+            location?.pathname === "/account/setup" ? "" : <AsideDefault className={clsx({'grey-out': isOnboardingActive})} />
           }
           {/* <AsideDefault /> */}
           {/* <div className='wrapper d-flex flex-column flex-row-fluid' id='kt_wrapper'> */}
-          <div className={`${location.pathname === "/account/setup" ? 'd-flex flex-column flex-row-fluid' : 'wrapper d-flex flex-column flex-row-fluid'}`} id='kt_wrapper'>
+          <div className={clsx(
+              'wrapper d-flex flex-column flex-row-fluid',
+              {'grey-out': isOnboardingActive},
+              {'d-flex flex-column flex-row-fluid': location.pathname === "/account/setup"}
+            )} id='kt_wrapper'>
             {
-              location?.pathname === "/account/setup" ? "" : <HeaderWrapper />
+              location?.pathname === "/account/setup" ? "" : <HeaderWrapper isUnlocked={currentStep >= 2} />
             }
             {/* <HeaderWrapper /> */}
 

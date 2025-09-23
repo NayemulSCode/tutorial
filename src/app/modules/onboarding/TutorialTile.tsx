@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import Draggable from 'react-draggable'
 import {useSelector, useDispatch} from 'react-redux'
 import {RootState} from '../../../setup'
-import {nextStep, prevStep} from './onboardingSlice'
+import {nextStep, prevStep, completeOnboarding} from './onboardingSlice'
 
 const TutorialTile: React.FC = () => {
   const dispatch = useDispatch()
@@ -14,16 +14,22 @@ const TutorialTile: React.FC = () => {
   }
 
   const handleNext = () => {
-    dispatch(nextStep())
+    if (currentStep === totalSteps) {
+      dispatch(completeOnboarding())
+    } else {
+      dispatch(nextStep())
+    }
   }
 
   const handlePrev = () => {
     dispatch(prevStep())
   }
 
+  const nodeRef = useRef(null)
+
   return (
-    <Draggable>
-      <div className='card shadow-sm' style={{position: 'fixed', bottom: '20px', right: '20px', width: '400px', zIndex: 1000}}>
+    <Draggable nodeRef={nodeRef}>
+      <div ref={nodeRef} className='card shadow-sm' style={{position: 'fixed', bottom: '20px', right: '20px', width: '400px', zIndex: 1000}}>
         <div className='card-header'>
           <h3 className='card-title'>Chuzeday Start</h3>
           <div className='card-toolbar'>
@@ -46,8 +52,8 @@ const TutorialTile: React.FC = () => {
             <button className='btn btn-light' onClick={handlePrev} disabled={currentStep === 1}>
               Previous
             </button>
-            <button className='btn btn-primary' onClick={handleNext} disabled={currentStep === totalSteps}>
-              Next
+            <button className='btn btn-primary' onClick={handleNext}>
+              {currentStep === totalSteps ? 'Finish' : 'Next'}
             </button>
           </div>
         </div>
