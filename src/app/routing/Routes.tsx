@@ -21,14 +21,13 @@ const Routes: FC = () => {
   const {token} = useContext(AppContext)
   const isAuthorized = localStorage.getItem('token') || token;
   const user = useSelector((state: RootState) => state.auth.user)
+  console.log("🚀 ~ Routes ~ user:", user)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (isAuthorized && user && user.approved_status !== 'approved') {
+    if (isAuthorized ) {
       dispatch(setOnboardingActive(true))
-    } else if (user && user.approved_status === 'approved') {
-      dispatch(setOnboardingActive(false))
-    }
+    } 
   }, [isAuthorized, user, dispatch])
 
   const handleCookieAccept = () => {
