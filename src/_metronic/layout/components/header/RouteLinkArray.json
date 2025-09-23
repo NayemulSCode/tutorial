@@ -1,0 +1,123 @@
+
+[
+    {
+        "title": "Sales",
+        "route_path": "/sales/daily-sales"
+    },
+    {
+        "title":"Vouchers",
+        "route_path":"/vouchers"
+    },
+    {
+        "title":"Guests",
+        "route_path":"/guests"
+    },
+    {
+        "title":"Appointments",
+        "route_path":"/sales/appointment-list"
+    },
+    {
+        "title":"Sales history",
+        "route_path":"/sales/sales-list"
+    },
+    {
+        "title":"Voucher list",
+        "route_path":"/sales/voucher-list"
+    },
+    {
+        "title":"Products",
+        "route_path":"/inventory/products"
+    },
+    {
+        "title":"Product categories",
+        "route_path":"/inventory/product-category"
+    },
+    {
+        "title":"Product brands",
+        "route_path":"/inventory/product-brand"
+    },
+    {
+        "title":"Chairs",
+        "route_path":"/chairs"
+    },
+    {
+        "title":"Services",
+        "route_path":"/services/list"
+    },
+    {
+        "title":"Service categies",
+        "route_path":"/services/categories"
+    },
+    {
+        "title":"Treatment types",
+        "route_path":"/services/treatment-types"
+    },
+    {
+        "title":"Staffs",
+        "route_path":"/staff/employees"
+    },
+    {
+        "title":"Analytics",
+        "route_path":"/analytics/dashboard"
+    },
+    {
+        "title":"Settings",
+        "route_path":"/business/settings"
+    },
+    {
+        "title":"Calendar",
+        "route_path":"/calendar"
+    },
+    {
+        "title":"Create voucher",
+        "route_path":"/voucher-add"
+    },
+    {
+        "title":"Create guset",
+        "route_path":"/add-guest"
+    },
+    {
+        "title":"Create appointment",
+        "route_path":"/appointment/add"
+    },
+    {
+        "title":"Create product",
+        "route_path":"/product-add"
+    },
+    {
+        "title":"Create service",
+        "route_path":"/add-service"
+    },
+    {
+        "title":"Business Information",
+        "route_path":"/setup/business-details"
+    },
+    {
+        "title":"Bank Details",
+        "route_path":"/setup/bank-details"
+    },
+    {
+        "title":"Online Booking",
+        "route_path":"/setup/online-booking"
+    },
+    {
+        "title":"Close Dates",
+        "route_path":"/setup/closed-dates"
+    },
+    {
+        "title":"Subscription",
+        "route_path":"/setup/subscription"
+    },
+    {
+        "title":"Working Hours",
+        "route_path":"/setup/working-hours"
+    },
+    {
+        "title":"Sales Checkout",
+        "route_path":"/sales-checkout"
+    },
+    {
+        "title":"Share",
+        "route_path":"/share"
+    }
+]
