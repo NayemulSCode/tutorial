@@ -24,7 +24,6 @@ import {RootState} from '../../setup'
 const MasterLayout: React.FC = ({ children }) => {
   const location = useLocation()
   const {isOnboardingActive, unlockedItems} = useSelector((state: RootState) => state.onboarding)
-  console.log("🚀 ~ MasterLayout ~ unlockedItems:", unlockedItems)
   // console.log("location", location.pathname)
   return (
     <PageDataProvider>

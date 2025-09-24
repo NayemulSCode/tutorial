@@ -2,12 +2,11 @@ import React, {useRef} from 'react'
 import Draggable from 'react-draggable'
 import {useSelector, useDispatch} from 'react-redux'
 import {RootState} from '../../../setup'
-import {nextStep, prevStep, completeOnboarding} from './onboardingSlice'
+import {nextStep, prevStep, finishOnboardingFlow} from './onboardingSlice'
 
 const TutorialTile: React.FC = () => {
   const dispatch = useDispatch()
   const nodeRef = useRef(null)
-
   const {currentStep, totalSteps, steps} = useSelector((state: RootState) => state.onboarding)
   const currentStepData = steps[currentStep - 1]
 
@@ -16,9 +15,8 @@ const TutorialTile: React.FC = () => {
   }
 
   const handleNext = () => {
-    console.log("🚀 ~ handleNext ~ currentStep:", currentStep)
     if (currentStep === totalSteps) {
-      dispatch(completeOnboarding())
+      dispatch(finishOnboardingFlow())
     } else {
       dispatch(nextStep())
     }
@@ -27,7 +25,6 @@ const TutorialTile: React.FC = () => {
   const handlePrev = () => {
     dispatch(prevStep())
   }
-
 
   return (
     <Draggable nodeRef={nodeRef}>

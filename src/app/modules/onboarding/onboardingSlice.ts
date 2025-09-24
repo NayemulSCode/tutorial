@@ -84,12 +84,9 @@ const onboardingSlice = createSlice({
       state.isOnboardingActive = action.payload
     },
     nextStep: (state) => {
-      console.log("🚀 ~ state:", state.currentStep)
       if (state.currentStep < state.totalSteps) {
         const currentStepData = state.steps[state.currentStep - 1]
-        console.log("🚀 ~ currentStepData:", currentStepData)
         if (currentStepData.unlocks && !state.unlockedItems.includes(currentStepData.unlocks)) {
-          console.log("🚀 ~ currentStepData: inside the if", currentStepData)
           state.unlockedItems.push(currentStepData.unlocks)
         }
         state.currentStep += 1
@@ -101,8 +98,16 @@ const onboardingSlice = createSlice({
         // Note: We don't re-lock items when going back. This is a design choice.
       }
     },
-    completeOnboarding: (state) => {
-      // Unlock all items on completion
+    finishOnboardingFlow: (state) => {
+      // Unlock the final item before finishing
+      const lastStep = state.steps[state.totalSteps - 1]
+      if (lastStep.unlocks && !state.unlockedItems.includes(lastStep.unlocks)) {
+        state.unlockedItems.push(lastStep.unlocks)
+      }
+      state.isOnboardingActive = false
+    },
+    bypassOnboarding: (state) => {
+      // Unlock all items for users who are already approved
       state.unlockedItems = Object.values(OnboardingUnlockKeys)
       state.isOnboardingActive = false
       state.currentStep = 1
@@ -110,5 +115,12 @@ const onboardingSlice = createSlice({
   },
 })
 
-export const {setCurrentStep, setOnboardingActive, nextStep, prevStep, completeOnboarding} = onboardingSlice.actions
+export const {
+  setCurrentStep,
+  setOnboardingActive,
+  nextStep,
+  prevStep,
+  finishOnboardingFlow,
+  bypassOnboarding,
+} = onboardingSlice.actions
 export default onboardingSlice.reducer
