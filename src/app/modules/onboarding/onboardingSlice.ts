@@ -23,6 +23,7 @@ interface OnboardingState {
   isOnboardingActive: boolean
   steps: OnboardingStep[]
   unlockedItems: string[]
+  hasCompletedOnce: boolean
 }
 
 const mockSteps: OnboardingStep[] = [
@@ -71,6 +72,7 @@ const initialState: OnboardingState = {
   isOnboardingActive: false,
   steps: mockSteps,
   unlockedItems: [],
+  hasCompletedOnce: false,
 }
 
 const onboardingSlice = createSlice({
@@ -105,12 +107,9 @@ const onboardingSlice = createSlice({
         state.unlockedItems.push(lastStep.unlocks)
       }
       state.isOnboardingActive = false
-    },
-    bypassOnboarding: (state) => {
-      // Unlock all items for users who are already approved
+      state.hasCompletedOnce = true // Set completion flag
+      // On completion, ensure all items are unlocked for the user going forward
       state.unlockedItems = Object.values(OnboardingUnlockKeys)
-      state.isOnboardingActive = false
-      state.currentStep = 1
     },
   },
 })
@@ -121,6 +120,5 @@ export const {
   nextStep,
   prevStep,
   finishOnboardingFlow,
-  bypassOnboarding,
 } = onboardingSlice.actions
 export default onboardingSlice.reducer
