@@ -28,7 +28,7 @@ const TutorialTile: React.FC = () => {
 
   return (
     <Draggable nodeRef={nodeRef}>
-      <div ref={nodeRef} className='card shadow-sm' style={{position: 'fixed', bottom: '20px', right: '20px', width: '700px', zIndex: 1000}}>
+      <div ref={nodeRef} className='card shadow-sm' style={{position: 'fixed', bottom: '20px', right: '20px', width: '650px', height:'450px', zIndex: 1000}}>
         <div className='card-header'>
           <h3 className='card-title'>Chuzeday Start</h3>
           <div className='card-toolbar'>
@@ -38,7 +38,7 @@ const TutorialTile: React.FC = () => {
         <div className='card-body'>
           <div className='row'>
             <div className='col-md-6'>
-              <div className='mb-4' style={{height: '200px', overflowY: 'auto', border: '1px solid #eee', padding: '10px', borderRadius: '5px'}}>
+              <div className='mb-4' style={{height: '100px', overflowY: 'auto', border: '1px solid #eee', padding: '10px', borderRadius: '5px'}}>
                 <p><strong>AI Assistant:</strong> Welcome to Chuzeday! I'm here to help you get started. This first video will give you a quick overview of the platform.</p>
               </div>
               <textarea className='form-control' rows={2} placeholder='Type your message...'></textarea>

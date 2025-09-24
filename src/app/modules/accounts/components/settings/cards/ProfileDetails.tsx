@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
+import clsx from 'clsx'
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useMutation, useQuery } from '@apollo/client'
 import { toAbsoluteUrl } from '../../../../../../_metronic/helpers'
@@ -11,10 +12,15 @@ import { IAccountInfo } from '../../../../../../types';
 import shopAvatar from '../../../../../../_metronic/assets/images/avatars/placeholder-image.png';
 import { useTostMessage } from '../../../../widgets/components/useTostMessage';
 import { imageUrl } from '../../../../util';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../../setup';
+import { OnboardingUnlockKeys } from '../../../../onboarding/onboardingSlice';
 
 const ProfileDetails: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
   const { addUser, user } = useContext(AppContext);
-    const {showToast} = useTostMessage()
+  const {isOnboardingActive, unlockedItems} = useSelector((state: RootState) => state.onboarding)
+
+  const {showToast} = useTostMessage()
   const [upimgUrl, setUpImgurl] = useState("");
   const [upimgUrl2, setUpImgurl2] = useState("");
   const [loading, setLoading] = useState(false)
@@ -254,18 +260,33 @@ const ProfileDetails: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
                     <div className='image-input profile-avatar-wrap image-input-outline'>
                       <div className='image-input-wrapper w-125px h-125px'>
                         {
-                          <img className="profile-pic-up-icon" src={upimgUrl ? upimgUrl : profileData.photo ?
-                            `${imageBaseURL}${profileData?.photo}` : toAbsoluteUrl(`/media/avatars/blank.png`)} />
+                          <img
+                            className='profile-pic-up-icon'
+                            src={
+                              upimgUrl
+                                ? upimgUrl
+                                : profileData.photo
+                                ? `${imageBaseURL}${profileData?.photo}`
+                                : toAbsoluteUrl(`/media/avatars/blank.png`)
+                            }
+                          />
                         }
-                        <svg className="profile-pic-up-svg" viewBox="0 0 25 23" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M21.072 16.002a.75.75 0 01.75.75v1.842h1.842a.75.75 0 01.743.648l.007.102a.75.75 0 01-.75.75h-1.842v1.842a.75.75 0 01-.648.743l-.102.007a.75.75 0 01-.75-.75v-1.842H18.48a.75.75 0 01-.743-.648l-.007-.102a.75.75 0 01.75-.75h1.842v-1.842a.75.75 0 01.648-.743zM14.102.45a.75.75 0 01.624.334l1.621 2.43h3.285a2.593 2.593 0 012.593 2.594v7.494a.75.75 0 11-1.5 0V5.808c0-.604-.49-1.093-1.093-1.093h-3.686a.75.75 0 01-.624-.334L13.7 1.95H8.974l-1.62 2.43a.75.75 0 01-.624.335H3.043c-.604 0-1.093.49-1.093 1.093v11.98c0 .605.49 1.094 1.093 1.094h11.691a.75.75 0 110 1.5H3.044A2.593 2.593 0 01.45 17.789V5.808a2.593 2.593 0 012.593-2.593h3.285L7.948.784A.75.75 0 018.574.45zm-2.764 5.53a5.358 5.358 0 110 10.716 5.358 5.358 0 010-10.716zm0 1.5a3.858 3.858 0 100 7.716 3.858 3.858 0 000-7.716zM4.08 5.808a1.037 1.037 0 110 2.074 1.037 1.037 0 010-2.074z" fill="#b5b5c3" fill-rule="evenodd"></path>
+                        <svg
+                          className='profile-pic-up-svg'
+                          viewBox='0 0 25 23'
+                          xmlns='http://www.w3.org/2000/svg'
+                        >
+                          <path
+                            d='M21.072 16.002a.75.75 0 01.75.75v1.842h1.842a.75.75 0 01.743.648l.007.102a.75.75 0 01-.75.75h-1.842v1.842a.75.75 0 01-.648.743l-.102.007a.75.75 0 01-.75-.75v-1.842H18.48a.75.75 0 01-.743-.648l-.007-.102a.75.75 0 01.75-.75h1.842v-1.842a.75.75 0 01.648-.743zM14.102.45a.75.75 0 01.624.334l1.621 2.43h3.285a2.593 2.593 0 012.593 2.594v7.494a.75.75 0 11-1.5 0V5.808c0-.604-.49-1.093-1.093-1.093h-3.686a.75.75 0 01-.624-.334L13.7 1.95H8.974l-1.62 2.43a.75.75 0 01-.624.335H3.043c-.604 0-1.093.49-1.093 1.093v11.98c0 .605.49 1.094 1.093 1.094h11.691a.75.75 0 110 1.5H3.044A2.593 2.593 0 01.45 17.789V5.808a2.593 2.593 0 012.593-2.593h3.285L7.948.784A.75.75 0 018.574.45zm-2.764 5.53a5.358 5.358 0 110 10.716 5.358 5.358 0 010-10.716zm0 1.5a3.858 3.858 0 100 7.716 3.858 3.858 0 000-7.716zM4.08 5.808a1.037 1.037 0 110 2.074 1.037 1.037 0 010-2.074z'
+                            fill='#b5b5c3'
+                            fill-rule='evenodd'
+                          ></path>
                         </svg>
-                        <input type="file" accept="image/*" onChange={imageUpload} />
+                        <input type='file' accept='image/*' onChange={imageUpload} />
                       </div>
                     </div>
                   </div>
                 </div>
-
                 <div className='row mb-6'>
                   <label className='col-lg-4 col-form-label required fw-bold fs-6'>Full Name</label>
 
@@ -275,8 +296,13 @@ const ProfileDetails: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
                         <input
                           type='text'
                           className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-                          placeholder='First name' value={profileData?.first_name} name="first_name" onChange={handleUpdate}
-                          onKeyPress={(e: any) => { handleWhiteSpce(e) }}
+                          placeholder='First name'
+                          value={profileData?.first_name}
+                          name='first_name'
+                          onChange={handleUpdate}
+                          onKeyPress={(e: any) => {
+                            handleWhiteSpce(e)
+                          }}
                           ref={firstNameRef}
                         />
                       </div>
@@ -285,46 +311,54 @@ const ProfileDetails: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
                         <input
                           type='text'
                           className='form-control form-control-lg form-control-solid'
-                          placeholder='Last name' value={profileData?.last_name} name="last_name" onChange={handleUpdate}
+                          placeholder='Last name'
+                          value={profileData?.last_name}
+                          name='last_name'
+                          onChange={handleUpdate}
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-
                 <div className='row mb-6'>
                   <label className='col-lg-4 col-form-label required fw-bold fs-6'>Company</label>
                   <div className='col-lg-8 fv-row'>
                     <input
                       type='text'
                       className='form-control form-control-lg form-control-solid'
-                      placeholder='Company name' value={profileData?.business_info?.name} name="business_info.name" onChange={handleUpdate}
-                      onKeyPress={(e: any) => { handleWhiteSpce(e) }}
+                      placeholder='Company name'
+                      value={profileData?.business_info?.name}
+                      name='business_info.name'
+                      onChange={handleUpdate}
+                      onKeyPress={(e: any) => {
+                        handleWhiteSpce(e)
+                      }}
                       ref={businessNameRef}
                     />
                   </div>
                 </div>
                 <div className='row mb-6'>
-                  <label className='col-lg-4 col-form-label required fw-bold fs-6'>Company Size</label>
+                  <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                    Company Size
+                  </label>
                   <div className='col-lg-8 fv-row'>
                     <input
-                      type="text"
-                      autoComplete="off"
+                      type='text'
+                      autoComplete='off'
                       className='form-control form-control-lg form-control-solid'
-                      placeholder='Company size' 
-                      value={profileData?.business_info?.team_size} 
-                      name="business_info.team_size" 
+                      placeholder='Company size'
+                      value={profileData?.business_info?.team_size}
+                      name='business_info.team_size'
                       onChange={handleUpdate}
                       onKeyPress={(event: any) => {
                         if (!/[0-9]/.test(event.key)) {
-                          event.preventDefault();
+                          event.preventDefault()
                         }
                       }}
                       ref={companySizeRef}
                     />
                   </div>
                 </div>
-
                 <div className='row mb-6'>
                   <label className='col-lg-4 col-form-label fw-bold fs-6'>
                     <span>Contact Phone</span>
@@ -334,11 +368,14 @@ const ProfileDetails: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
                     <input
                       type='tel'
                       className='form-control form-control-lg form-control-solid'
-                      placeholder='Phone number' value={profileData?.mobile} name="mobile" onChange={handleUpdate}
+                      placeholder='Phone number'
+                      value={profileData?.mobile}
+                      name='mobile'
+                      onChange={handleUpdate}
                       onKeyPress={(e: any) => {
-                        handleWhiteSpce(e);
+                        handleWhiteSpce(e)
                         if (/([^+0-9]+)/gi.test(e.key)) {
-                          e.preventDefault();
+                          e.preventDefault()
                         }
                       }}
                     />
@@ -351,64 +388,104 @@ const ProfileDetails: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
 
                   <div className='col-lg-8 fv-row'>
                     <input
-                      autoComplete="off"
+                      autoComplete='off'
                       type='text'
                       className='form-control form-control-lg form-control-solid'
-                      placeholder='Company website' value={profileData?.business_info?.website} name="business_info.website" onChange={handleUpdate}
+                      placeholder='Company website'
+                      value={profileData?.business_info?.website}
+                      name='business_info.website'
+                      onChange={handleUpdate}
                     />
                   </div>
                 </div>
-
                 <div className='row mb-6'>
                   <label className='col-lg-4 col-form-label fw-bold fs-6'>
                     <span>Description</span>
                   </label>
                   <div className='col-lg-8 fv-row'>
                     <textarea
-                      autoComplete="off"
+                      autoComplete='off'
                       className='form-control form-control-lg form-control-solid'
-                      placeholder='Company description' value={profileData?.business_info?.description} name="business_info.description" onChange={handleUpdate}
+                      placeholder='Company description'
+                      value={profileData?.business_info?.description}
+                      name='business_info.description'
+                      onChange={handleUpdate}
                     />
                   </div>
                 </div>
 
-                <div className='row mb-6'>
+                <div
+                  className={clsx('row mb-6', {
+                    'grey-out-override': unlockedItems.includes(
+                      OnboardingUnlockKeys.UPDATE_THUMBNAIL
+                    ),
+                  })}
+                >
                   <label className='col-lg-4 col-form-label fw-bold fs-6'>Thumbnail</label>
                   <div className='col-lg-8'>
                     <div className='image-input profile-avatar-wrap image-input-outline'>
                       <div className='image-input-wrapper w-125px h-125px'>
                         {
-                          <img className="profile-pic-up-icon" src={upimgUrl2 ? upimgUrl2 : profileData?.business_info?.thumbnail ?
-                            `${imageBaseURL2}${profileData?.business_info?.thumbnail}` : toAbsoluteUrl(`/media/avatars/blank.png`)} />
+                          <img
+                            className='profile-pic-up-icon'
+                            src={
+                              upimgUrl2
+                                ? upimgUrl2
+                                : profileData?.business_info?.thumbnail
+                                ? `${imageBaseURL2}${profileData?.business_info?.thumbnail}`
+                                : toAbsoluteUrl(`/media/avatars/blank.png`)
+                            }
+                          />
                         }
-                        <svg className="profile-pic-up-svg" viewBox="0 0 25 23" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21.072 16.002a.75.75 0 01.75.75v1.842h1.842a.75.75 0 01.743.648l.007.102a.75.75 0 01-.75.75h-1.842v1.842a.75.75 0 01-.648.743l-.102.007a.75.75 0 01-.75-.75v-1.842H18.48a.75.75 0 01-.743-.648l-.007-.102a.75.75 0 01.75-.75h1.842v-1.842a.75.75 0 01.648-.743zM14.102.45a.75.75 0 01.624.334l1.621 2.43h3.285a2.593 2.593 0 012.593 2.594v7.494a.75.75 0 11-1.5 0V5.808c0-.604-.49-1.093-1.093-1.093h-3.686a.75.75 0 01-.624-.334L13.7 1.95H8.974l-1.62 2.43a.75.75 0 01-.624.335H3.043c-.604 0-1.093.49-1.093 1.093v11.98c0 .605.49 1.094 1.093 1.094h11.691a.75.75 0 110 1.5H3.044A2.593 2.593 0 01.45 17.789V5.808a2.593 2.593 0 012.593-2.593h3.285L7.948.784A.75.75 0 018.574.45zm-2.764 5.53a5.358 5.358 0 110 10.716 5.358 5.358 0 010-10.716zm0 1.5a3.858 3.858 0 100 7.716 3.858 3.858 0 000-7.716zM4.08 5.808a1.037 1.037 0 110 2.074 1.037 1.037 0 010-2.074z" fill="#b5b5c3" fill-rule="evenodd"></path>
+                        <svg
+                          className='profile-pic-up-svg'
+                          viewBox='0 0 25 23'
+                          xmlns='http://www.w3.org/2000/svg'
+                        >
+                          <path
+                            d='M21.072 16.002a.75.75 0 01.75.75v1.842h1.842a.75.75 0 01.743.648l.007.102a.75.75 0 01-.75.75h-1.842v1.842a.75.75 0 01-.648.743l-.102.007a.75.75 0 01-.75-.75v-1.842H18.48a.75.75 0 01-.743-.648l-.007-.102a.75.75 0 01.75-.75h1.842v-1.842a.75.75 0 01.648-.743zM14.102.45a.75.75 0 01.624.334l1.621 2.43h3.285a2.593 2.593 0 012.593 2.594v7.494a.75.75 0 11-1.5 0V5.808c0-.604-.49-1.093-1.093-1.093h-3.686a.75.75 0 01-.624-.334L13.7 1.95H8.974l-1.62 2.43a.75.75 0 01-.624.335H3.043c-.604 0-1.093.49-1.093 1.093v11.98c0 .605.49 1.094 1.093 1.094h11.691a.75.75 0 110 1.5H3.044A2.593 2.593 0 01.45 17.789V5.808a2.593 2.593 0 012.593-2.593h3.285L7.948.784A.75.75 0 018.574.45zm-2.764 5.53a5.358 5.358 0 110 10.716 5.358 5.358 0 010-10.716zm0 1.5a3.858 3.858 0 100 7.716 3.858 3.858 0 000-7.716zM4.08 5.808a1.037 1.037 0 110 2.074 1.037 1.037 0 010-2.074z'
+                            fill='#b5b5c3'
+                            fill-rule='evenodd'
+                          ></path>
                         </svg>
-                        <input type="file" accept="image/*" onChange={thumbnailUpload} />
+                        <input type='file' accept='image/*' onChange={thumbnailUpload} />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
             <div className='col-sm-4'>
-              <div className="profile-slider-photos">
-                  <div className="form-heading border-0 pb-0">
-                    <h2 className="section-title">Slider photos</h2>
-                    <p>Drag and drop a photo to change the order.</p>
-                  </div>
-                  <ImageUploader multiple={true} products={profileData?.business_info?.slider} getUrl={getUrl} />
-                  <div className="image-thumbnails">
-                    {images && images.length > 0 && images.map((image: any, index: number) =>
-                      <span className="edit-pr-img-thumbnail">
-                        <img className="image-thumbnail" key={image} src={`${imageBaseURL2}${image}`}
-                          alt="image"></img>
-                        <i onClick={() => { handleImgDelete(index) }} className="far fa-trash-alt delete-icon"></i>
+              <div className='profile-slider-photos'>
+                <div className='form-heading border-0 pb-0'>
+                  <h2 className='section-title'>Slider photos</h2>
+                  <p>Drag and drop a photo to change the order.</p>
+                </div>
+                <ImageUploader
+                  multiple={true}
+                  products={profileData?.business_info?.slider}
+                  getUrl={getUrl}
+                />
+                <div className='image-thumbnails'>
+                  {images &&
+                    images.length > 0 &&
+                    images.map((image: any, index: number) => (
+                      <span className='edit-pr-img-thumbnail'>
+                        <img
+                          className='image-thumbnail'
+                          key={image}
+                          src={`${imageBaseURL2}${image}`}
+                          alt='image'
+                        ></img>
+                        <i
+                          onClick={() => {
+                            handleImgDelete(index)
+                          }}
+                          className='far fa-trash-alt delete-icon'
+                        ></i>
                       </span>
-                    )
-                    }
-                  </div>
+                    ))}
+                </div>
               </div>
             </div>
           </div>
@@ -417,14 +494,13 @@ const ProfileDetails: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
             <button type='submit' className='btn btn-primary' disabled={loading}>
               {!loading && 'Save Changes'}
               {loading && (
-                <span className='indicator-progress' style={{ display: 'block' }}>
+                <span className='indicator-progress' style={{display: 'block'}}>
                   Please wait...{' '}
                   <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                 </span>
               )}
             </button>
           </div>
-
         </form>
       </div>
     </div>

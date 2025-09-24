@@ -5,6 +5,7 @@ export const OnboardingUnlockKeys = {
   PROFILE_MENU: 'PROFILE_MENU',
   MY_PROFILE_LINK: 'MY_PROFILE_LINK',
   PROFILE_PAGE_EDIT_BUTTON: 'PROFILE_PAGE_EDIT_BUTTON',
+  UPDATE_THUMBNAIL: 'UPDATE_THUMBNAIL',
   SETTINGS_MENU: 'SETTINGS_MENU',
   WORKING_HOURS_EDIT_BUTTON: 'WORKING_HOURS_EDIT_BUTTON',
   SERVICES_MENU: 'SERVICES_MENU',
@@ -41,9 +42,21 @@ const mockSteps: OnboardingStep[] = [
   },
   {
     title: 'Set Up Your Profile',
-    description: 'This step enables the "My Profile" link and the "Edit Profile" button.',
+    description: 'This step enables the "My Profile" link.',
     videoUrl: 'https://www.youtube.com/embed/ZxVG_k3q6jA',
     unlocks: OnboardingUnlockKeys.MY_PROFILE_LINK,
+  },
+  {
+    title: 'Edit Profile',
+    description: 'This step enables the "Edit Profile" button.',
+    videoUrl: 'https://www.youtube.com/embed/ZxVG_k3q6jA',
+    unlocks: OnboardingUnlockKeys.PROFILE_PAGE_EDIT_BUTTON,
+  },
+  {
+    title: 'Update Thumbnail ',
+    description: 'This step enables the Update thumbnail file input field.',
+    videoUrl: 'https://www.youtube.com/embed/ZxVG_k3q6jA',
+    unlocks: OnboardingUnlockKeys.UPDATE_THUMBNAIL,
   },
   {
     title: 'Setting Working Hours',
