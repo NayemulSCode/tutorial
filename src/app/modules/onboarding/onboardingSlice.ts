@@ -84,9 +84,12 @@ const onboardingSlice = createSlice({
       state.isOnboardingActive = action.payload
     },
     nextStep: (state) => {
+      console.log("🚀 ~ state:", state.currentStep)
       if (state.currentStep < state.totalSteps) {
         const currentStepData = state.steps[state.currentStep - 1]
+        console.log("🚀 ~ currentStepData:", currentStepData)
         if (currentStepData.unlocks && !state.unlockedItems.includes(currentStepData.unlocks)) {
+          console.log("🚀 ~ currentStepData: inside the if", currentStepData)
           state.unlockedItems.push(currentStepData.unlocks)
         }
         state.currentStep += 1

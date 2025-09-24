@@ -6,6 +6,8 @@ import {nextStep, prevStep, completeOnboarding} from './onboardingSlice'
 
 const TutorialTile: React.FC = () => {
   const dispatch = useDispatch()
+  const nodeRef = useRef(null)
+
   const {currentStep, totalSteps, steps} = useSelector((state: RootState) => state.onboarding)
   const currentStepData = steps[currentStep - 1]
 
@@ -14,6 +16,7 @@ const TutorialTile: React.FC = () => {
   }
 
   const handleNext = () => {
+    console.log("🚀 ~ handleNext ~ currentStep:", currentStep)
     if (currentStep === totalSteps) {
       dispatch(completeOnboarding())
     } else {
@@ -25,7 +28,6 @@ const TutorialTile: React.FC = () => {
     dispatch(prevStep())
   }
 
-  const nodeRef = useRef(null)
 
   return (
     <Draggable nodeRef={nodeRef}>
