@@ -269,6 +269,7 @@ const ProfileDetails: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
                                 ? `${imageBaseURL}${profileData?.photo}`
                                 : toAbsoluteUrl(`/media/avatars/blank.png`)
                             }
+                            alt='avatar'
                           />
                         }
                         <svg
@@ -435,6 +436,7 @@ const ProfileDetails: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
                                 ? `${imageBaseURL2}${profileData?.business_info?.thumbnail}`
                                 : toAbsoluteUrl(`/media/avatars/blank.png`)
                             }
+                            alt='avatar'
                           />
                         }
                         <svg
@@ -455,7 +457,11 @@ const ProfileDetails: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
                 </div>
               </div>
             </div>
-            <div className='col-sm-4'>
+            <div
+              className={clsx('col-sm-4', {
+                'grey-out-override': unlockedItems.includes(OnboardingUnlockKeys.UPDATE_THUMBNAIL),
+              })}
+            >
               <div className='profile-slider-photos'>
                 <div className='form-heading border-0 pb-0'>
                   <h2 className='section-title'>Slider photos</h2>
@@ -475,7 +481,7 @@ const ProfileDetails: React.FC<{ accInfo: any }> = ({ children, accInfo }) => {
                           className='image-thumbnail'
                           key={image}
                           src={`${imageBaseURL2}${image}`}
-                          alt='image'
+                          alt='thumbnail'
                         ></img>
                         <i
                           onClick={() => {
